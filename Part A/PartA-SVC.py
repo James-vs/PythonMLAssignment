@@ -1,24 +1,10 @@
 from sklearn import preprocessing
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn import svm, metrics
+from sklearn import svm
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
-import numpy as np
-
-# from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
-# from sklearn.gaussian_process import GaussianProcessClassifier
-# from sklearn.gaussian_process.kernels import RBF
-# from sklearn.linear_model import LogisticRegression
-# import numpy as np
-# from sklearn.naive_bayes import GaussianNB
-# from sklearn.neighbors import KNeighborsClassifier
-# from sklearn.neural_network import MLPClassifier
-# from sklearn.pipeline import make_pipeline
-# from sklearn.svm import SVC
-# from sklearn.tree import DecisionTreeClassifier
 
 trainingData = pd.read_csv("TrainingDataBinary.csv", header=None)
 testingData = pd.read_csv("TestingDataBinary.csv", header=None)
