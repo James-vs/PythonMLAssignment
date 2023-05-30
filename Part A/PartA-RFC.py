@@ -22,23 +22,23 @@ rfc = RandomForestClassifier()
 # using 30 as the random state value since this worked best in the SVC model
 
 # creating a pipeline
-pipe = Pipeline(steps=[('rfc', rfc)]) # ('scaler', MinMaxScaler()),
+# pipe = Pipeline(steps=[('scaler', MinMaxScaler()),('rfc', rfc)]) # StandardScaler()
 
 # Split dataset into training set and test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=30)
-# 70% training and 30% test
+# 75% training and 25% test
 # randomise/shuffle 30 data points when splitting the data
 
 
 # defining a grid search and parameters for finding optimal hyperparameters
 parameters = {
-    'rfc__n_estimators': [100], # 50, 150, 200, 500
-    'rfc__max_features': ['log2'], # , 'sqrt'
-    'rfc__criterion': ['entropy'], # 'gini', 'log_loss'
-    'rfc__random_state': [30] # 20, 25, 35, 40
-}
-cv_rfc = GridSearchCV(pipe, param_grid=parameters, n_jobs=-1, cv=10) # estimator=rfc removed for pipe testing
-cv_rfc.fit(X_train, y_train.values.ravel())
+    'n_estimators': [100], # 50, 150, 200, 500
+    'max_features': ['log2'], # , 'sqrt'
+    'criterion': ['entropy'], # 'gini', 'log_loss'
+    'random_state': [20, 30, 42] # 20, 25, 35, 40, 42
+} # 'rfc__' removed from beginning of variables since pipe no longer in use
+cv_rfc = GridSearchCV(estimator=rfc, param_grid=parameters, n_jobs=-1, cv=10) # estimator=rfc removed for pipe testing
+cv_rfc.fit(X_train, y_train) # .values.ravel()
 
 # printing the accuracy and best parameters
 print("Best parameter (CV score=%0.5f):" % cv_rfc.best_score_)
