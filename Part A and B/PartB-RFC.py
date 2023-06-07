@@ -8,8 +8,8 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import pandas as pd
 import numpy as np
 
-trainingData = pd.read_csv("TrainingDataBinary.csv", header=None)
-testingData = pd.read_csv("TestingDataBinary.csv", header=None)
+trainingData = pd.read_csv("TrainingDataMulti.csv", header=None)
+testingData = pd.read_csv("TestingDataMulti.csv", header=None)
 print(testingData.shape)
 print(trainingData.shape)
 X = trainingData.iloc[:, 0:128]
@@ -32,8 +32,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 
 # defining a grid search and parameters for finding optimal hyperparameters
 parameters = {
-    'n_estimators': [100], # 50, 150, 200, 500
-    'max_features': ['log2'], # , 'sqrt'
+    'n_estimators': [500], # 50, 100, 200, 500, 1000
+    'max_features': ['log2', 'sqrt'], # , 'sqrt'
     'criterion': ['entropy'], #, # 'gini', 'log_loss'
     'random_state': [30] # 20, 25, 35, 40, 42
 } # 'rfc__' removed from beginning of variables since pipe no longer in use
@@ -53,7 +53,7 @@ print(predLabels)
 
 outputData = testingData
 outputData[128] = predLabels
-outputData.to_csv("TestingResultsBinary.csv", header=False, index=False)
+# outputData.to_csv("TestingResultsMulti.csv", header=False, index=False)
 
 # while True:
 # model = RandomForestClassifier()
