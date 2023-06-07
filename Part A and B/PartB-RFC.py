@@ -50,7 +50,7 @@ print("Applying model to testing data")
 y_pred = cv_rfc.predict(X_test)
 # print("Accuracy score: " + str(metrics.accuracy_score(y_test, y_pred)))
 print("F1 Score: " + str(f1_score(y_test, y_pred, average='macro')))
-print("Testing Accuracy: " + str(cv_rfc.score(X_test, y_test)))
+print("Training Accuracy: " + str(cv_rfc.score(X_test, y_test)))
 print("Applying Model to unseen data")
 predLabels = cv_rfc.predict(testingData)
 print(predLabels)
@@ -65,7 +65,4 @@ disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=cv_rfc.classes
 disp.plot()
 plt.show()
 
-# while True:
-# model = RandomForestClassifier()
-# model.fit(X_train, y_train.values.ravel())
 
