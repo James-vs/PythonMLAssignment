@@ -2,11 +2,13 @@ from sklearn import preprocessing
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, f1_score
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 trainingData = pd.read_csv("TrainingDataMulti.csv", header=None)
 testingData = pd.read_csv("TestingDataMulti.csv", header=None)
@@ -46,7 +48,8 @@ print("Best parameter (CV score=%0.5f):" % cv_rfc.best_score_)
 print(cv_rfc.best_params_)
 print("Applying model to testing data")
 y_pred = cv_rfc.predict(X_test)
-print("Accuracy score: " + str(metrics.accuracy_score(y_test, y_pred)))
+# print("Accuracy score: " + str(metrics.accuracy_score(y_test, y_pred)))
+print("F1 Score: " + str(f1_score(y_test, y_pred, average='macro')))
 print("Testing Accuracy: " + str(cv_rfc.score(X_test, y_test)))
 print("Applying Model to unseen data")
 predLabels = cv_rfc.predict(testingData)
@@ -55,6 +58,12 @@ print(predLabels)
 outputData = testingData
 outputData[128] = predLabels
 outputData.to_csv("TestingResultsMulti.csv", header=False, index=False)
+
+# get confusion matrix
+cm = confusion_matrix(y_test, y_pred, labels=cv_rfc.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=cv_rfc.classes_)
+disp.plot()
+plt.show()
 
 # while True:
 # model = RandomForestClassifier()

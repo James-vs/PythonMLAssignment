@@ -2,11 +2,13 @@ from sklearn import preprocessing
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, f1_score
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 trainingData = pd.read_csv("TrainingDataBinary.csv", header=None)
 testingData = pd.read_csv("TestingDataBinary.csv", header=None)
@@ -54,6 +56,12 @@ print(predLabels)
 outputData = testingData
 outputData[128] = predLabels
 outputData.to_csv("TestingResultsBinary.csv", header=False, index=False)
+
+# get confusion matrix
+cm = confusion_matrix(y_test, y_pred, labels=cv_rfc.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=cv_rfc.classes_)
+disp.plot()
+plt.show()
 
 # while True:
 # model = RandomForestClassifier()
