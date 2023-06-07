@@ -31,14 +31,15 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 
 
 # defining a grid search and parameters for finding optimal hyperparameters
-parameters = {
+params = {
     'n_estimators': [500], # 50, 100, 200, 500, 1000
-    'max_features': ['log2', 'sqrt'], # , 'sqrt'
-    'criterion': ['entropy'], #, # 'gini', 'log_loss'
-    'random_state': [30] # 20, 25, 35, 40, 42
-} # 'rfc__' removed from beginning of variables since pipe no longer in use
-cv_rfc = GridSearchCV(estimator=rfc, param_grid=parameters, n_jobs=-1, cv=10) # estimator=rfc removed for pipe testing
-cv_rfc.fit(X_train, y_train) # .values.ravel()
+    'max_features': ['log2'], # 'log2', 'sqrt'
+    'criterion': ['entropy'], # 'entropy', 'gini', 'log_loss'
+    'random_state': [30] # 20, 30, 42
+}
+
+cv_rfc = GridSearchCV(estimator=rfc, param_grid=params, n_jobs=-1, cv=10)
+cv_rfc.fit(X_train, y_train)
 
 # printing the accuracy and best parameters
 print("Best parameter (CV score=%0.5f):" % cv_rfc.best_score_)
@@ -53,7 +54,7 @@ print(predLabels)
 
 outputData = testingData
 outputData[128] = predLabels
-# outputData.to_csv("TestingResultsMulti.csv", header=False, index=False)
+outputData.to_csv("TestingResultsMulti.csv", header=False, index=False)
 
 # while True:
 # model = RandomForestClassifier()
